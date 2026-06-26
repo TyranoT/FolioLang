@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-import { Compiler } from "./Compiler.js";
+import { Compiler } from "./compiler/Compiler.js";
 import { FileWriter } from "./io/FileWriter.js";
-import { HtmlRenderer } from "./renderers/HtmlRenderers.js";
-import { CssRenderer } from "./renderers/CssRenderers.js";
+import { HtmlRenderer } from "./renderers/HtmlRenderer.js";
+import { CssRenderer } from "./renderers/CssRenderer.js";
 
 const inputFile = process.argv[2];
 
@@ -17,9 +17,8 @@ const source = fs.readFileSync(filePath, "utf-8");
 
 const compiler = new Compiler();
 const portfolio = compiler.compile(source);
-console.log(portfolio.toString())
 
-const html = new HtmlRenderer().render(portfolio);
+const html = new HtmlRenderer(portfolio).render();
 const css = new CssRenderer().render();
 
 new FileWriter().write("dist", {

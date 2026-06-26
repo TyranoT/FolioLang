@@ -1,6 +1,19 @@
 
 portfolio "Italo Monteiro Leite" {
+  metadata {
+    lang "pt-BR"
+    favicon "https://th.bing.com/th/id/R.7fe3baa7d14308d15d0a46180d460949?rik=KnMDMWpoV%2fy82Q&riu=http%3a%2f%2fpluspng.com%2fimg-png%2ffavicon-png-favicon-1024.png&ehk=%2bqV5vS87IkGxoQ9CGodbGHtJdQuFWcL1ZerjusSBDCE%3d&risl=&pid=ImgRaw&r=0"
+  }
+
+  design "Principal" {
+    
+  }
+
   hero "Apresentação" {
-    title "Desenvolvedor Full Stack"
+    title "Italo Monteiro Leite"
+    subtitle "Desenvolvedor Full Stack"
+    description "Construo produtos web de ponta a ponta — do modelo de dados à interface. APIs confiáveis, front-ends rápidos e sistemas que crescem junto com o time."
+    image "https://i.pravatar.cc/480?img=68"
+    link "mailto:italo.monteiro@aahbrant.com"
   }
 }

@@ -3,11 +3,37 @@ export enum SectionType {
     About = "about",
     Projects = "projects",
     Contact = "contact",
+    Metadatas = "metadatas",
 }
 
-export interface Sections {
-    content: string;
-    subtitle?: string;
-    type: SectionType;
-    label?: string;
+export enum FontsFamily {
+    SpaceGrotesk = "space-grotesk",
+    IBMPlexMono = "ibm-plex-mono"
+}
+
+export type KeysMetadataProperties =
+    "title" |
+    "description" |
+    "author" |
+    "keywords" |
+    "viewport" |
+    "charset";
+
+export type KeysSectionProperties =
+    "title" |
+    "subtitle" |
+    "description" |
+    "image" |
+    "link";
+
+export interface Block<T extends string = string> {
+    keyword: string;
+    label: string;
+    properties: Record<T, string>;
+    children: Block<T>[];
+}
+
+export interface StructFont {
+    font: FontsFamily;
+    url: string;
 }

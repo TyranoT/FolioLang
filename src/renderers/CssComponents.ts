@@ -1,0 +1,79 @@
+
+
+export class CssComponents {
+
+    getStyleHero(): string {
+        return (`
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(2rem, 8vw, 8rem);
+            overflow: hidden;
+        }
+
+        /* technical blueprint grid, faded toward the edges */
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 64px 64px;
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 25% 45%, #000 25%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 70% at 25% 45%, #000 25%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* monospace eyebrow generated purely from CSS */
+        .hero::after {
+            content: "// portfolio";
+            position: absolute;
+            top: clamp(2rem, 8vw, 8rem);
+            left: clamp(2rem, 8vw, 8rem);
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            max-width: 16ch;
+            margin: 0;
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.8rem, 11vw, 8rem);
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            color: var(--text);
+        }
+
+        /* accent rule + caret under the headline */
+        .hero h1::after {
+            content: "";
+            display: block;
+            width: clamp(3rem, 8vw, 6rem);
+            height: 4px;
+            margin-top: clamp(1.2rem, 3vw, 2rem);
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        @keyframes hero-rise {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .hero h1 { animation: hero-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+            .hero::after { animation: hero-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both 0.15s; }
+        }    
+        `).trim();
+    }
+
+}
