@@ -1,0 +1,33 @@
+{
+  "name": "folio-lang",
+  "version": "1.0.0",
+  "description": "DSL de Portfolios",
+  "keywords": [
+    "DSL"
+  ],
+  "bin": {
+    "folio": "./build/cli.js"
+  },
+  "homepage": "https://github.com/TyranoT/FolioLang#readme",
+  "bugs": {
+    "url": "https://github.com/TyranoT/FolioLang/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TyranoT/FolioLang.git"
+  },
+  "license": "MIT",
+  "author": "Italo Monteiro Leite",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/cli.ts example/italo.folio",
+    "build": "tsc",
+    "start": "node build/cli.js example/italo.folio"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
