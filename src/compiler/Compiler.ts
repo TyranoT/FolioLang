@@ -11,6 +11,11 @@ export class Compiler {
         console.log(root);
         
         for (const section of root.children) {
+            if (section.keyword === "design") {
+                portfolio.setDesign(section);
+                continue;
+            }
+
             portfolio.addSection(section);
         }
 

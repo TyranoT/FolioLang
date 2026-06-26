@@ -19,7 +19,7 @@ const compiler = new Compiler();
 const portfolio = compiler.compile(source);
 
 const html = new HtmlRenderer(portfolio).render();
-const css = new CssRenderer().render();
+const css = new CssRenderer(portfolio).render();
 
 new FileWriter().write("dist", {
     "index.html": html,

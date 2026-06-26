@@ -1,4 +1,4 @@
-import { Block } from "./types.js";
+import { Block, DesignConfig, PaletteSet } from "./types.js";
 
 type ResponseToString = {
     resume: string;
@@ -10,12 +10,14 @@ export class Portfolio {
     public style: Record<string, string>;
     public metadatas: Record<string, string>;
     public sections: Block[];
+    public design: DesignConfig;
 
     constructor(name: string) {
         this.name = name;
         this.metadatas = {};
         this.sections = [];
         this.style = {};
+        this.design = { palette: "", colors: {} };
     }
 
     addSection(section: Block): void {
@@ -28,6 +30,14 @@ export class Portfolio {
 
     addStyle(properties: Object): void {
         Object.assign(this.style, properties);
+    }
+
+    /** Lê o bloco `design "Nome" { ... }`: rótulo vira o conjunto, propriedades viram sobrescritas. */
+    setDesign(block: Block): void {
+        this.design = {
+            palette: block.label,
+            colors: block.properties as Partial<PaletteSet>,
+        };
     }
 
     toString(): ResponseToString {
