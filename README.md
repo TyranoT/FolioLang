@@ -109,34 +109,48 @@ npm run build
 
 ## 🚀 Uso rápido
 
-O FolioLang é uma CLI: você passa um arquivo `.folio` e ele gera a pasta `dist/`.
+### Comece em um comando (recomendado)
 
-### Modo desenvolvimento (sem build)
-
-```bash
-npx tsx src/cli.ts example/italo.folio
-```
-
-### Usando o build compilado
+A forma mais rápida de criar um portfólio — sem clonar nada:
 
 ```bash
-npm run build
-node build/cli.js example/italo.folio
+npm create foliolang@latest
 ```
 
-### Scripts prontos
+Ele pergunta o **nome** e a **paleta**, cria a pasta já com `npm install` + `git init` feitos, e te deixa pronto para:
 
 ```bash
-npm run dev     # roda o example/italo.folio com tsx
-npm run start   # roda o example/italo.folio com o build
+cd seu-portfolio
+npm run dev     # servidor local com live reload — edite portfolio.folio e veja na hora
+npm run build   # gera o site estático em dist/
 ```
 
-Em todos os casos a saída é a mesma:
+> 💡 `npm run dev` sobe um servidor em `http://localhost:5173`, abre o navegador e **recarrega a página sozinho** toda vez que você salva o `.folio`.
+
+### Usando a CLI diretamente
+
+O engine é a CLI `folio`, com dois subcomandos:
+
+```bash
+folio build <arquivo.folio> [--out <dir>]              # compila para dist/ (ou --out)
+folio dev   <arquivo.folio> [--port <n>] [--out <dir>] # servidor + live reload
+```
+
+### Desenvolvendo o próprio FolioLang (a partir do fonte)
+
+```bash
+npm run dev      # folio dev example/italo.folio (via tsx, sem build)
+npm run build    # compila TypeScript → build/
+npm run start    # folio build example/italo.folio (usando o build)
+```
+
+A saída de `folio build` é sempre:
 
 ```
 dist/
 ├── index.html   # o portfólio
-└── styles.css   # tema + estilos
+├── styles.css   # tema + estilos
+└── assets/      # imagens locais copiadas (se houver)
 ```
 
 Abra o `dist/index.html` no navegador e pronto. ✅
@@ -220,16 +234,40 @@ hero "Apresentação" {
 }
 ```
 
+### 🔹 `projects` — grid de projetos
+
+Cada projeto é um **bloco filho** dentro de `projects`. A seção aceita `title`/`subtitle` no cabeçalho; cada projeto aceita `title`, `description`, `image` e `link`.
+
+```folio
+projects "Trabalhos" {
+  title "Projetos em destaque"
+  subtitle "Uma seleção recente."
+
+  projeto "Meu App" {
+    title "Meu App"
+    description "O que ele faz e qual problema resolve."
+    image "./assets/meu-app.png"        # imagem local (copiada para dist/assets/)
+    link "https://github.com/voce/meu-app"
+  }
+}
+```
+
+Renderiza um grid responsivo de cards (imagem + título + descrição), com hover na cor de destaque. Imagem e link são opcionais.
+
 ### Seções disponíveis
 
 | Bloco | Status | Descrição |
 | --- | --- | --- |
 | `hero` | ✅ Renderizado | Seção de abertura com título animado |
+| `projects` | ✅ Renderizado | Grid responsivo de cards de projeto |
 | `about` | 🚧 Planejado | Bloco "sobre mim" |
-| `projects` | 🚧 Planejado | Grid de projetos |
 | `contact` | 🚧 Planejado | Formulário / links de contato |
 
-> ℹ️ As propriedades válidas de uma seção são `title`, `subtitle`, `description`, `image` e `link`. Hoje o `hero` renderiza o `title`; as demais propriedades já são parseadas e ficam disponíveis para os próximos renderers.
+> ℹ️ As propriedades válidas de uma seção são `title`, `subtitle`, `description`, `image` e `link`.
+
+### 🖼️ Imagens locais
+
+Qualquer `image` (ou o `favicon` em `metadata`) pode apontar para um arquivo local relativo ao `.folio` (ex.: `image "./assets/foto.png"`). No build, o FolioLang copia o arquivo para `dist/assets/` e reescreve o caminho automaticamente. URLs externas (`http://`, `https://`, `data:`, etc.) são mantidas como estão.
 
 * * *
 
@@ -320,7 +358,7 @@ portfolio "Italo Monteiro Leite" {
 Compile:
 
 ```bash
-npx tsx src/cli.ts example/italo.folio
+npx tsx src/cli.ts build example/italo.folio
 # Portfolio gerado em dist/index.html
 ```
 
@@ -328,33 +366,39 @@ npx tsx src/cli.ts example/italo.folio
 
 ## 🗂️ Estrutura do projeto
 
+O repositório contém **dois pacotes**: o engine (`foliolang`, na raiz) e o scaffolder (`create-foliolang/`, publicado à parte).
+
 ```
-FolioLang/
+FolioLang/                       # pacote `foliolang` (engine/CLI)
 ├── example/
-│   └── italo.folio            # exemplo de entrada
+│   └── italo.folio              # exemplo de entrada
 ├── src/
-│   ├── cli.ts                 # ponto de entrada da CLI
+│   ├── cli.ts                   # dispatcher dos subcomandos (build/dev)
+│   ├── buildPortfolio.ts        # pipeline reutilizável (compila + escreve)
 │   ├── compiler/
-│   │   ├── Parser.ts          # .folio  →  árvore de Block
-│   │   └── Compiler.ts        # Block   →  Portfolio
+│   │   ├── Parser.ts            # .folio  →  árvore de Block
+│   │   └── Compiler.ts          # Block   →  Portfolio
 │   ├── domain/
-│   │   ├── Portfolio.ts       # modelo do portfólio
-│   │   ├── types.ts           # tipos, enums e paletas
+│   │   ├── Portfolio.ts         # modelo do portfólio
+│   │   ├── types.ts             # tipos, enums e paletas
 │   │   └── constants.ts
 │   ├── renderers/
-│   │   ├── HtmlRenderer.ts    # gera o index.html
-│   │   ├── CssRenderer.ts     # gera o styles.css
-│   │   ├── HtmlComponents.ts  # componentes de seção (hero, ...)
-│   │   ├── CssComponents.ts   # estilos de seção
-│   │   ├── colors/
-│   │   │   └── ColorPalette.ts  # conjuntos de cores + customização
-│   │   └── fonts/
-│   │       └── FontsGoogle.ts   # imports e variáveis de fonte
+│   │   ├── HtmlRenderer.ts      # gera o index.html
+│   │   ├── CssRenderer.ts       # gera o styles.css
+│   │   ├── HtmlComponents.ts    # componentes de seção (hero, projects, ...)
+│   │   ├── CssComponents.ts     # estilos de seção + scrollbar
+│   │   ├── colors/ColorPalette.ts
+│   │   └── fonts/FontsGoogle.ts
 │   ├── io/
-│   │   └── FileWriter.ts      # escreve em dist/
-│   └── utils/
-│       └── dedent.ts
-└── dist/                      # saída gerada (index.html + styles.css)
+│   │   ├── FileWriter.ts        # escreve em dist/
+│   │   └── AssetManager.ts      # copia/reescreve imagens locais
+│   ├── server/
+│   │   └── DevServer.ts         # servidor + live reload (só built-ins)
+│   └── utils/dedent.ts
+├── dist/                        # saída gerada (index.html + styles.css + assets/)
+└── create-foliolang/            # pacote `create-foliolang` (scaffolder)
+    ├── src/index.ts             # prompts + cópia de template + install + git init
+    └── template/                # arquivos do projeto gerado
 ```
 
 * * *
@@ -363,20 +407,25 @@ FolioLang/
 
 | Comando | O que faz |
 | --- | --- |
-| `npm run dev` | Roda o exemplo com `tsx` (sem build) |
+| `npm run dev` | `folio dev example/italo.folio` com `tsx` (live reload, sem build) |
 | `npm run build` | Compila o TypeScript para `build/` |
-| `npm run start` | Roda o exemplo usando o build compilado |
+| `npm run start` | `folio build example/italo.folio` usando o build compilado |
+
+> Variável `FOLIO_NO_OPEN=1` desliga a abertura automática do navegador no `folio dev`.
 
 * * *
 
 ## 🗺️ Roadmap
 
+- [x] Seção `projects` (grid de cards)
+- [x] Imagens locais copiadas para `dist/assets/`
+- [x] CLI: flag de diretório de saída (`--out`)
+- [x] `npm create foliolang` + dev server com live reload
 - [ ] Renderizar `subtitle`, `description`, `image` e `link` no `hero`
-- [ ] Seções `about`, `projects` e `contact`
+- [ ] Seções `about` e `contact`
 - [ ] Customização de fontes pelo bloco `design`
 - [ ] Mais conjuntos de cores
-- [ ] CLI: flag de diretório de saída (`--out`)
-- [ ] Publicar como pacote npm (`folio`)
+- [ ] Publicar `foliolang` e `create-foliolang` no npm
 
 * * *
 
@@ -385,7 +434,7 @@ FolioLang/
 Contribuições são bem-vindas! Algumas ideias do que ajuda bastante:
 
 - 🎨 **Novas paletas** em `src/renderers/colors/ColorPalette.ts`
-- 🧱 **Novas seções** (`about`, `projects`, `contact`) nos renderers
+- 🧱 **Novas seções** (`about`, `contact`) nos renderers
 - 🔤 **Novas fontes** em `src/renderers/fonts/FontsGoogle.ts`
 - 🐛 **Correções** e melhorias no parser/compiler
 - 📖 **Documentação** e exemplos `.folio`
