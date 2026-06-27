@@ -1,0 +1,38 @@
+portfolio "{{name}}" {
+  metadata {
+    lang "pt-BR"
+    description "Portfólio de {{name}}"
+    author "{{name}}"
+  }
+
+  design "{{palette}}" {
+
+  }
+
+  hero "Apresentação" {
+    title "{{name}}"
+    subtitle "Sua profissão aqui"
+    description "Escreva uma frase curta sobre você e o que você faz."
+    image "https://i.pravatar.cc/480"
+    link "mailto:voce@exemplo.com"
+  }
+
+  projects "Trabalhos" {
+    title "Projetos em destaque"
+    subtitle "Uma seleção do que você construiu."
+
+    projeto "Projeto Um" {
+      title "Projeto Um"
+      description "Descreva o que é o projeto e qual problema ele resolve."
+      image "https://picsum.photos/seed/projeto-um/640/360"
+      link "https://github.com/voce/projeto-um"
+    }
+
+    projeto "Projeto Dois" {
+      title "Projeto Dois"
+      description "Dica: para usar uma imagem local, coloque o arquivo em assets/ e use image \"./assets/foto.png\"."
+      image "https://picsum.photos/seed/projeto-dois/640/360"
+      link "https://github.com/voce/projeto-dois"
+    }
+  }
+}

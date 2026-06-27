@@ -25,16 +25,16 @@ export class HtmlRenderer extends HtmlComponents {
         return dedent(`
             <!DOCTYPE html>
             <html lang="${this.lang}">
-            <head>
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                ${this.metadatas}
-                <title>${this.name}</title>
-                <link rel="stylesheet" href="./styles.css" />
-            </head>
-            <body>
-                ${this.sectionsHtml}
-            </body>
+                <head>
+                    <meta charset="UTF-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    ${this.metadatas}
+                    <title>${this.name}</title>
+                    <link rel="stylesheet" href="./styles.css" />
+                </head>
+                <body>
+                    ${this.sectionsHtml}
+                </body>
             </html>
         `);
     }

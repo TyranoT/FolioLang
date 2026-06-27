@@ -1,0 +1,32 @@
+{
+  "name": "create-foliolang",
+  "version": "1.0.0",
+  "description": "Scaffolder do FolioLang: cria um portfólio pronto com um único comando.",
+  "keywords": [
+    "foliolang",
+    "portfolio",
+    "scaffold",
+    "create"
+  ],
+  "bin": {
+    "create-foliolang": "./build/index.js"
+  },
+  "files": [
+    "build",
+    "template"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Italo Monteiro Leite",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "typescript": "^6.0.3"
+  }
+}

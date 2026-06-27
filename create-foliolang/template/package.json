@@ -1,0 +1,13 @@
+{
+  "name": "{{name-slug}}",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "folio dev portfolio.folio",
+    "build": "folio build portfolio.folio"
+  },
+  "dependencies": {
+    "foliolang": "^1.1.0"
+  }
+}

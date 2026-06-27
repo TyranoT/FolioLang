@@ -43,9 +43,17 @@ export class CssRenderer extends CssComponents {
                 -webkit-font-smoothing: antialiased;
             }
 
+            /* ---- Scrollbar --------------------------------------------------- */
+
+            ${this.getStyleScrollbar()}
+
             /* ---- Hero -------------------------------------------------------- */
 
             ${this.getStyleHero()}
+
+            /* ---- Projects ---------------------------------------------------- */
+
+            ${this.getStyleProjects()}
         `);
     }
 }
