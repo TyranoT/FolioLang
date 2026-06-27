@@ -16,4 +16,32 @@ portfolio "Italo Monteiro Leite" {
     image "https://i.pravatar.cc/480?img=68"
     link "mailto:italo.monteiro@aahbrant.com"
   }
+
+  projects "Trabalhos" {
+    title "Projetos em destaque"
+    subtitle "Uma seleção recente do que tenho construído."
+
+    projeto "FolioLang" {
+      title "FolioLang"
+      description "DSL para descrever portfólios e compilar para HTML e CSS estáticos."
+      image "./assets/prototipo-logo-foliolang.png"
+      link "https://github.com/italo/foliolang"
+    }
+
+    projeto "API de Pagamentos" {
+      title "API de Pagamentos"
+      description "Serviço de cobranças com webhooks idempotentes e conciliação automática."
+      image "https://picsum.photos/seed/payments/640/360"
+      link "https://github.com/italo/payments-api"
+    }
+
+    projeto "Dashboard de Métricas" {
+      title "Dashboard de Métricas"
+      description "Painel em tempo real para acompanhar indicadores de produto e infraestrutura."
+      image "https://picsum.photos/seed/dashboard/640/360"
+      link "https://github.com/italo/metrics-dashboard"
+    }
+  }
+
+
 }
