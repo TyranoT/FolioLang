@@ -8,8 +8,6 @@ export class Compiler {
         const root = this.parser.parse(source);
         const portfolio = new Portfolio(root.label);
 
-        console.log(root);
-        
         for (const section of root.children) {
             if (section.keyword === "design") {
                 portfolio.setDesign(section);

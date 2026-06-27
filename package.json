@@ -1,12 +1,22 @@
 {
-  "name": "folio-lang",
-  "version": "1.0.0",
-  "description": "DSL de Portfolios",
+  "name": "foliolang",
+  "version": "1.1.0",
+  "description": "DSL declarativa para gerar portfólios estáticos (HTML + CSS).",
   "keywords": [
-    "DSL"
+    "DSL",
+    "portfolio",
+    "static-site",
+    "generator"
   ],
   "bin": {
     "folio": "./build/cli.js"
+  },
+  "main": "build/cli.js",
+  "files": [
+    "build"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "homepage": "https://github.com/TyranoT/FolioLang#readme",
   "bugs": {
@@ -19,11 +29,11 @@
   "license": "MIT",
   "author": "Italo Monteiro Leite",
   "type": "module",
-  "main": "index.js",
   "scripts": {
-    "dev": "tsx src/cli.ts example/italo.folio",
+    "dev": "tsx src/cli.ts dev example/italo.folio",
     "build": "tsc",
-    "start": "node build/cli.js example/italo.folio"
+    "start": "node build/cli.js build example/italo.folio",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
